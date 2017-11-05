@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.penoder.swipeflushview.SwipeFlushView
+        android:id="@+id/swipeFlushView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#E8E8E8"
+            android:scrollbarStyle="outsideOverlay"
+            android:dividerHeight="2dp" />
+
+    </com.penoder.swipeflushview.SwipeFlushView>
+
+</LinearLayout>
