@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 实现了 ListView 的上拉加载的 SwipeRefreshLayouot. -->
+    <declare-styleable name="SwipeFlushView">
+        <!-- 是否允许 下拉刷新. -->
+        <attr name="flushingEnable" format="boolean" />
+        <!-- 是否允许 上拉加载. -->
+        <attr name="loadingEnable" format="boolean" />
+        <!-- 是否需要 自动刷新. -->
+        <attr name="autoFlushing" format="boolean" />
+        <!-- 上拉加载的模式，上滑到底部后 是否 直接加载. -->
+        <attr name="autoLoading" format="boolean" />
+    </declare-styleable>
+</resources>

@@ -35,7 +35,6 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     private SwipeFlushView swipeFlushView;
-    private ListView listView;
     private MyAdapter adapter;
 
     private MyHandler mHandler;
@@ -48,31 +47,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        swipeFlushView = (SwipeFlushView) findViewById(R.id.swipeFlushView);
-        listView = (ListView) findViewById(R.id.listView);
-        adapter = new MyAdapter(dataList);
-        listView.setAdapter(adapter);
-        swipeFlushView.setRefreshing(true);
-
         mHandler = new MyHandler(this);
 
+        swipeFlushView = (SwipeFlushView) findViewById(R.id.swipeFlushView);
+        ListView listView = (ListView) findViewById(R.id.listView);
+        adapter = new MyAdapter(dataList);
+        listView.setAdapter(adapter);
+
+//        swipeFlushView.autoFlushing();
+//        swipeFlushView.setAutoLoading(false);
+//        swipeFlushView.setCanFlushing(false);
+//        swipeFlushView.setCanLoading(true);
+
         // 刷新事件
-        swipeFlushView.setOnFlushListener(new SwipeFlushView.OnFlushListener() {
-            @Override
-            public void onFlush() {
-                pageNum = 1;
-                getDataList();
-            }
+        swipeFlushView.setOnFlushListener(() -> {
+            pageNum = 1;
+            getDataList();
         });
 
         // 加载事件
-        swipeFlushView.setOnLoadListener(new SwipeFlushView.OnLoadListener() {
-            @Override
-            public void onLoad() {
-                pageNum++;
-                getDataList();
-            }
+        swipeFlushView.setOnLoadListener(() -> {
+            pageNum++;
+            getDataList();
         });
 
         pageNum = 1;
@@ -134,18 +130,18 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case -1:
-                    weakReference.get().swipeFlushView.setRefreshing(false);
+                    weakReference.get().swipeFlushView.setFlushing(false);
                     weakReference.get().swipeFlushView.setLoading(false);
                     Toast.makeText(weakReference.get(), "获取数据失败！", Toast.LENGTH_SHORT).show();
                     break;
                 case 0:
-                    weakReference.get().swipeFlushView.setRefreshing(false);
+                    weakReference.get().swipeFlushView.setFlushing(false);
                     weakReference.get().swipeFlushView.setLoading(false);
                     Toast.makeText(weakReference.get(), "没有更多的数据！", Toast.LENGTH_SHORT).show();
                     break;
                 case 1:
                     weakReference.get().adapter.notifyDataSetChanged();
-                    weakReference.get().swipeFlushView.setRefreshing(false);
+                    weakReference.get().swipeFlushView.setFlushing(false);
                     break;
                 case 2:
                     weakReference.get().adapter.notifyDataSetChanged();
@@ -153,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 3:
                     if (weakReference.get().pageNum == 1) {
-                        weakReference.get().swipeFlushView.setRefreshing(false);
+                        weakReference.get().swipeFlushView.setFlushing(false);
                         Toast.makeText(weakReference.get(), "刷新失败！", Toast.LENGTH_SHORT).show();
                     } else if (weakReference.get().pageNum > 1) {
                         weakReference.get().swipeFlushView.setLoading(false);
