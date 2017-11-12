@@ -141,9 +141,9 @@ public class SwipeFlushView extends SwipeRefreshLayout {
         if (flushingEnabled) {
             // 加载的时候，设置该控件不可用，则加载的时候不能刷新
             if (isLoading) {
-                setCanFlushing(false);
+                setEnabled(false);
             } else {
-                setCanFlushing(true);
+                setEnabled(true);
             }
         }
         return super.dispatchTouchEvent(ev);
